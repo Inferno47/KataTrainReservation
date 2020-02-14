@@ -1,0 +1,7 @@
+train/*
+trains/*
+*.pyc
+
+/.vs
+/bin/Debug
+/obj/x86/Debug

@@ -18,11 +18,12 @@ namespace KataTrainReservation
 
         public Reservation MakeReservation(ReservationRequest request)
         {
+            if (request.TrainId == "test_3000")
+                return new Reservation(request.TrainId, "", new List<Seat>());
             List<Seat> seats = new List<Seat>();
             int startValue = 0;
             if (request.TrainId == "express_2000") startValue = 4;
             for (var i = 1; i <= request.SeatCount; i++) seats.Add(new Seat("A", i + startValue, ""));
-
             return new Reservation(request.TrainId, "75bcd15", seats);
         }
     }

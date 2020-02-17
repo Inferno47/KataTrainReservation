@@ -8,7 +8,7 @@ namespace KataTrainReservation.TicketOfficeTest
     {
     
         [Test]
-        public void reserve1SeatsInEmptyCoach()
+        public void reserve1SeatsInEmptyCoachReturnSuccessReservation()
         {
             Reservation expected = new Reservation("local_1000", "75bcd15", new List<Seat>() {new Seat("A", 1)});
             TicketOffice ticketOffice = new TicketOffice();
@@ -26,5 +26,7 @@ namespace KataTrainReservation.TicketOfficeTest
 
             Assert.AreEqual(expected, result);
         }
+
+
     }
 }

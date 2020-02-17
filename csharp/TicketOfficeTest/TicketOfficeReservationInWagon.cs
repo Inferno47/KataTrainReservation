@@ -13,7 +13,7 @@ namespace KataTrainReservation.TicketOfficeTest
         public void Setup()
         {
             _trainData = new Mock<ITrainData>();
-            _trainData.Setup(e => e.GetSeatInCoach("express_2000", "A")).Returns(new List<Seat>() {
+            _trainData.Setup(e => e.GetSeatInCoach("express_2000", "A")).Returns(new Coach(new List<Seat>() {
                 new Seat("A" , 1, "75bcd14"),
                 new Seat("A" , 2, "75bcd14"),
                 new Seat("A" , 3, "75bcd14"),
@@ -22,14 +22,21 @@ namespace KataTrainReservation.TicketOfficeTest
                 new Seat("A" , 6, ""),
                 new Seat("A" , 7, ""),
                 new Seat("A" , 8, "")
-            });
+            }));
 
-            _trainData.Setup(e => e.GetSeatInCoach("local_1000", "A")).Returns(new List<Seat>() {
+            _trainData.Setup(e => e.GetSeatInCoach("local_1000", "A")).Returns(new Coach(new List<Seat>() {
                 new Seat("A" , 1, ""),
                 new Seat("A" , 2, ""),
                 new Seat("A" , 3, ""),
                 new Seat("A" , 4, "")
-            });
+            }));
+
+            _trainData.Setup(e => e.GetSeatInCoach("test_3000", "A")).Returns(new Coach(new List<Seat>() {
+                new Seat("A" , 1, "75bcd14"),
+                new Seat("A" , 2, "75bcd14"),
+                new Seat("A" , 3, "75bcd14"),
+                new Seat("A" , 4, "75bcd14")
+            }));
         }
 
         [Test]

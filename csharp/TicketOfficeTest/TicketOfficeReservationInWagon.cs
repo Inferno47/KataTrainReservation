@@ -35,7 +35,7 @@ namespace KataTrainReservation.TicketOfficeTest
         [Test]
         public void reserve1SeatsInEmptyCoachReturnSuccessReservation()
         {
-            Reservation expected = new Reservation("local_1000", "75bcd15", new List<Seat>() {new Seat("A", 1, null)});
+            Reservation expected = new Reservation("local_1000", "75bcd15", new List<Seat>() {new Seat("A", 1, "")});
             TicketOffice ticketOffice = new TicketOffice(_trainData.Object);
             Reservation result = ticketOffice.MakeReservation(new ReservationRequest("local_1000", 1));
 
@@ -45,7 +45,7 @@ namespace KataTrainReservation.TicketOfficeTest
         [Test]
         public void reserve2SeatsInEmptyCoachReturnSuccessReservation()
         {
-            Reservation expected = new Reservation("local_1000", "75bcd15", new List<Seat>() { new Seat("A", 1, null), new Seat("A", 2, null) });
+            Reservation expected = new Reservation("local_1000", "75bcd15", new List<Seat>() { new Seat("A", 1, ""), new Seat("A", 2, "") });
             TicketOffice ticketOffice = new TicketOffice(_trainData.Object);
             Reservation result = ticketOffice.MakeReservation(new ReservationRequest("local_1000", 2));
 
@@ -55,16 +55,11 @@ namespace KataTrainReservation.TicketOfficeTest
         [Test]
         public void reserve1SeatsInPartiallyReservedCoachReturnSuccessReservation()
         {
-            Reservation expected = new Reservation("express_2000", "75bcd15", new List<Seat>() { new Seat("A", 5, null) });
+            Reservation expected = new Reservation("express_2000", "75bcd15", new List<Seat>() { new Seat("A", 5, "") });
             TicketOffice ticketOffice = new TicketOffice(_trainData.Object);
             Reservation result = ticketOffice.MakeReservation(new ReservationRequest("express_2000", 1));
 
             Assert.AreEqual(expected, result);
         }
-    }
-
-    public interface ITrainData
-    {
-        List<Seat> GetSeatInCoach(string train, string coach);
     }
 }

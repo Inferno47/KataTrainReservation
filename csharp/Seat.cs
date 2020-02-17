@@ -23,7 +23,7 @@ namespace KataTrainReservation
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return Coach == other.Coach && SeatNumber == other.SeatNumber;
+            return Coach == other.Coach && SeatNumber == other.SeatNumber && BookingReference == other.BookingReference;
         }
 
         public static bool operator ==(Seat left, Seat right)

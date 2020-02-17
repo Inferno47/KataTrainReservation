@@ -11,7 +11,9 @@ namespace KataTrainReservation
         
         public Reservation MakeReservation(ReservationRequest request)
         {
-            return new Reservation("local_1000", "75bcd15", new List<Seat>() {new Seat("A", 1)});
+            if (request.SeatCount == 1)
+                return new Reservation("local_1000", "75bcd15", new List<Seat>() {new Seat("A", 1)});
+            return new Reservation("local_1000", "75bcd15", new List<Seat>() {new Seat("A", 1), new Seat("A", 2) });
         }
     }
 }

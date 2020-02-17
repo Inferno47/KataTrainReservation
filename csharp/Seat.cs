@@ -8,11 +8,13 @@ namespace KataTrainReservation
 {
     public class Seat : IEquatable<Seat>
     {
+        public string BookingReference { get; private set; }
         public string Coach { get; private set; }
         public int SeatNumber { get; private set; }
 
-        public Seat(string coach, int seatNumber)
+        public Seat(string coach, int seatNumber, string bookingReference)
         {
+            BookingReference = bookingReference;
             this.Coach = coach;
             this.SeatNumber = seatNumber;
         }

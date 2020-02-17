@@ -12,19 +12,21 @@ namespace KataTrainReservation.TicketOfficeTest
             _seats = seats;
         }
 
-        private int HowManyReservedSeat()
-        {
-            return _seats.Count(e => e.BookingReference != "");
-        }
+        private int HowManyReservedSeat() => _seats.Count(e => e.BookingReference != "");
+
+        private List<Seat> FreeSeatsInCoach() => _seats.Where(e => e.BookingReference == "").ToList();
+
+        private bool isMore70PercentReserved(ReservationRequest request) => (HowManyReservedSeat() + request.SeatCount) * 100 / _seats.Count > 70;
 
         public List<Seat> ChooseSeats(ReservationRequest request)
         {
             List<Seat> seats = new List<Seat>();
 
-            if ((HowManyReservedSeat() + request.SeatCount) * 100 / _seats.Count > 70)
+            if (isMore70PercentReserved(request))
                 return seats;
 
-            List<Seat> freeSeatsInCoach = _seats.Where(e => e.BookingReference == "").ToList();
+            List<Seat> freeSeatsInCoach = FreeSeatsInCoach();
+
             for (var i = 0; i < request.SeatCount; i++) seats.Add(freeSeatsInCoach[i]);
             return seats;
         }

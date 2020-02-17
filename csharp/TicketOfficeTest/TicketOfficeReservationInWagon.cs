@@ -3,7 +3,7 @@ using NUnit.Framework;
 namespace KataTrainReservation.TicketOfficeTest
 {
     [TestFixture]
-    public class TicketOfficeReservationInTrain
+    public class TicketOfficeReservationInWagon
     {
     
         [Test]

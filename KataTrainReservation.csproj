@@ -91,7 +91,7 @@
     <Compile Include="csharp\ReservationRequest.cs" />
     <Compile Include="csharp\Seat.cs" />
     <Compile Include="csharp\TicketOffice.cs" />
-    <Compile Include="csharp\TicketOfficeTest\TicketOfficeReservationInTrain.cs" />
+    <Compile Include="csharp\TicketOfficeTest\TicketOfficeReservationInWagon.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />

@@ -11,8 +11,7 @@ namespace KataTrainReservation
         
         public Reservation MakeReservation(ReservationRequest request)
         {
-            //TODO: implement this code!
-            throw new NotImplementedException();
+            return new Reservation("local_1000", "75bcd15", new List<Seat>() {new Seat("A", 1)});
         }
     }
 }

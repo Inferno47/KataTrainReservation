@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace KataTrainReservation
 {
-    public class Seat
+    public class Seat : IEquatable<Seat>
     {
         public string Coach { get; private set; }
         public int SeatNumber { get; private set; }
@@ -17,19 +17,29 @@ namespace KataTrainReservation
             this.SeatNumber = seatNumber;
         }
 
-        public override int GetHashCode()
+        public bool Equals(Seat other)
         {
-            return base.GetHashCode();
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Coach == other.Coach && SeatNumber == other.SeatNumber;
         }
 
-        /// <summary>
-        /// N.B. this is not how you would override equals in a production environment. :)
-        /// </summary>
-        public override bool Equals(object obj)
+        public static bool operator ==(Seat left, Seat right)
         {
-            Seat other = obj as Seat;
+            return Equals(left, right);
+        }
 
-            return this.Coach == other.Coach && this.SeatNumber == other.SeatNumber;
+        public static bool operator !=(Seat left, Seat right)
+        {
+            return !Equals(left, right);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((Coach != null ? Coach.GetHashCode() : 0) * 397) ^ SeatNumber;
+            }
         }
     }
 }

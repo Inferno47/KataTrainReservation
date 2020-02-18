@@ -1,4 +1,4 @@
-namespace KataTrainReservation.TicketOfficeTest
+namespace KataTrainReservation
 {
     public interface ITrainData
     {

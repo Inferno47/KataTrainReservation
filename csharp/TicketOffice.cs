@@ -19,8 +19,8 @@ namespace KataTrainReservation
         public Reservation MakeReservation(ReservationRequest request)
         {
             var seatInCoach = _trainData.GetSeatInCoach(request.TrainId, "A");
-            var seats = seatInCoach.ChooseSeats(request);
-            return new Reservation(request.TrainId, seats.Count > 0 ? "75bcd15" : "", seats);
+            var seats = seatInCoach.SelectSeat(request.SeatCount);
+            return Reservation.Of(request.TrainId, seats.Count > 0 ? "75bcd15" : "", seats);
         }
 
         

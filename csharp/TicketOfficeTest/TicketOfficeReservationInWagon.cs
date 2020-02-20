@@ -70,7 +70,7 @@ namespace KataTrainReservation.TicketOfficeTest
         }
 
         [Test]
-        public void Reserve1SeatsInFullyBookedCoachReturnSuccessReservation()
+        public void Reserve1SeatsInFullyBookedCoachReturnFailReservation()
         {
             Reservation expected = Reservation.Of("test_3000", "", new List<Seat>() {});
             TicketOffice ticketOffice = new TicketOffice(_trainData.Object);

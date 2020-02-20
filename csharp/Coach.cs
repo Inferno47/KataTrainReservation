@@ -19,23 +19,19 @@ namespace KataTrainReservation
 
         private int HowManyReservedSeat() => _seats.Count(e => e.BookingReference != "");
 
-        private int HowManyPercentReserved(int newSeatCount) => (HowManyReservedSeat() + newSeatCount) * 100 / _seats.Count;
-
-        private bool IsMore70PercentReserved(int newSeatCount) => HowManyPercentReserved(newSeatCount) > 70;
+        private int HowManyPercentReserved(int requiredNumberSeat) => (HowManyReservedSeat() + requiredNumberSeat) * 100 / _seats.Count;
 
         private List<Seat> FreeSeatsInCoach() => _seats.Where(e => e.BookingReference == "").ToList();
 
-        public List<Seat> SelectSeat(int newSeatCount)
+        private List<Seat> GetRequiredNumberListSeat(int requiredNumberSeat) => FreeSeatsInCoach().GetRange(0, requiredNumberSeat);
+
+        public List<Seat> SelectSeat(int requiredNumberSeat)
         {
-            List<Seat> seats = new List<Seat>();
+            var MaxReservedSeat = 70;
+            if (HowManyPercentReserved(requiredNumberSeat) > MaxReservedSeat)
+                return new List<Seat>();
 
-            if (IsMore70PercentReserved(newSeatCount))
-                return seats;
-
-            List<Seat> freeSeatsInCoach = FreeSeatsInCoach();
-
-            for (var i = 0; i < newSeatCount; i++) seats.Add(freeSeatsInCoach[i]);
-            return seats;
+            return GetRequiredNumberListSeat(requiredNumberSeat);
         }
     }
 }

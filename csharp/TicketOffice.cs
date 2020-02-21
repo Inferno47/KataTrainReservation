@@ -9,20 +9,23 @@ namespace KataTrainReservation
 {
     public class TicketOffice
     {
-        private readonly ITrainData _trainData;
+        private readonly ISeat _seat;
+        private readonly IReservationRegister _reservationRegister;
 
-        public TicketOffice(ITrainData trainData)
+        public TicketOffice(ISeat seat, IReservationRegister reservationRegister)
         {
-            _trainData = trainData;
+            _seat = seat;
+            _reservationRegister = reservationRegister;
         }
 
         public Reservation MakeReservation(ReservationRequest request)
         {
-            var seatInCoach = _trainData.GetSeatInCoach(request.TrainId, "A");
+            var seatInCoach = _seat.GetInCoach(request.TrainId, "A");
             var seats = seatInCoach.SelectSeat(request.SeatCount);
-            return Reservation.Of(request.TrainId, seats.Count > 0 ? "75bcd15" : "", seats);
-        }
 
-        
+            var reservation = Reservation.Of(request.TrainId, seats.Count > 0 ? "75bcd15" : "", seats);
+            Result registrationResult = _reservationRegister.Reserve(reservation);
+            return registrationResult.IfFound() ? reservation : Reservation.Empty(request.TrainId);
+        }
     }
 }

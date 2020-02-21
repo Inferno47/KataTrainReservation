@@ -87,12 +87,15 @@
     <Content Include="train_data_service\train_data_service_flask.py" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="csharp\IReservationRegister.cs" />
+    <Compile Include="csharp\MaxSeatReservation.cs" />
     <Compile Include="csharp\Reservation.cs" />
     <Compile Include="csharp\ReservationRequest.cs" />
+    <Compile Include="csharp\Result.cs" />
     <Compile Include="csharp\Seat.cs" />
     <Compile Include="csharp\TicketOffice.cs" />
     <Compile Include="csharp\Coach.cs" />
-    <Compile Include="csharp\ITrainData.cs" />
+    <Compile Include="csharp\ISeat.cs" />
     <Compile Include="csharp\TicketOfficeTest\TicketOfficeReservationInWagon.cs" />
   </ItemGroup>
   <ItemGroup />

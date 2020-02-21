@@ -5,33 +5,31 @@ namespace KataTrainReservation
 {
     public class Coach
     {
-        public static Coach Of(List<Seat> seats)
+        public static Coach Of(List<Seat> seats, MaxSeatReservation maxReservedSeat)
         {
-            return new Coach(seats);
+            return new Coach(seats, maxReservedSeat);
         }
 
         private readonly List<Seat> _seats;
+        private readonly MaxSeatReservation _maxSeatReservation;
 
-        private Coach(List<Seat> seats)
+        private Coach(List<Seat> seats, MaxSeatReservation maxReservedSeat)
         {
             _seats = seats;
+            _maxSeatReservation = maxReservedSeat;
         }
 
         private int HowManyReservedSeat() => _seats.Count(e => e.BookingReference != "");
 
-        private int HowManyPercentReserved(int requiredNumberSeat) => (HowManyReservedSeat() + requiredNumberSeat) * 100 / _seats.Count;
+        private int HowManyPercentReserved(int requiredNumberOfSeat) => (HowManyReservedSeat() + requiredNumberOfSeat) * 100 / _seats.Count;
 
         private List<Seat> FreeSeatsInCoach() => _seats.Where(e => e.BookingReference == "").ToList();
 
-        private List<Seat> GetRequiredNumberListSeat(int requiredNumberSeat) => FreeSeatsInCoach().GetRange(0, requiredNumberSeat);
+        private List<Seat> GetRequiredNumberListSeat(int requiredNumberOfSeat) => FreeSeatsInCoach().GetRange(0, requiredNumberOfSeat);
 
-        public List<Seat> SelectSeat(int requiredNumberSeat)
+        public List<Seat> SelectSeat(int requiredNumberOfSeat)
         {
-            var MaxReservedSeat = 70;
-            if (HowManyPercentReserved(requiredNumberSeat) > MaxReservedSeat)
-                return new List<Seat>();
-
-            return GetRequiredNumberListSeat(requiredNumberSeat);
+            return HowManyPercentReserved(requiredNumberOfSeat) > _maxSeatReservation.MaxReservedSeat ? new List<Seat>() : GetRequiredNumberListSeat(requiredNumberOfSeat);
         }
     }
 }

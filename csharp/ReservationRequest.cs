@@ -8,10 +8,15 @@ namespace KataTrainReservation
 {
     public class ReservationRequest
     {
+        public static ReservationRequest Of(string trainId, int seatCount)
+        {
+            return new ReservationRequest(trainId, seatCount);
+        }
+
         public string TrainId { get; private set; }
         public int SeatCount { get; private set; }
 
-        public ReservationRequest(string trainId, int seatCount)
+        private ReservationRequest(string trainId, int seatCount)
         {
             this.TrainId = trainId;
             this.SeatCount = seatCount;

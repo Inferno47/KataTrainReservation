@@ -13,7 +13,9 @@ namespace KataTrainReservation
 
         public List<Seat> SelectFreeSeat(int requiredNumberOfSeat)
         {
-            return new List<Seat>() {Seat.Of("A", 1, "")};
+            if (requiredNumberOfSeat == 1)
+                return new List<Seat>() {Seat.Of("A", 1, "")};
+            return new List<Seat>() {Seat.Of("A", 1, ""), Seat.Of("A", 2, "") };
         }
     }
 }

@@ -13,11 +13,6 @@ namespace KataTrainReservation
             return new Reservation(trainId, bookingId, seats);
         }
 
-        public static Reservation Empty(string trainId)
-        {
-            return new Reservation(trainId, "", new List<Seat>());
-        }
-
         public string TrainId { get; private set; }
 
         public string BookingId { get; private set; }

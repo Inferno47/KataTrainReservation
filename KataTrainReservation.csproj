@@ -96,7 +96,9 @@
     <Compile Include="csharp\TicketOffice.cs" />
     <Compile Include="csharp\Coach.cs" />
     <Compile Include="csharp\ISeat.cs" />
+    <Compile Include="csharp\TicketOfficeTest\TicketOfficeReservationInTrain.cs" />
     <Compile Include="csharp\TicketOfficeTest\TicketOfficeReservationInWagon.cs" />
+    <Compile Include="csharp\Train.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />

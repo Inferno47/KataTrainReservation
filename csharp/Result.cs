@@ -4,7 +4,7 @@ namespace KataTrainReservation
 {
     public abstract class Result
     {
-        public abstract bool IfFound();
+        public abstract bool Persisted();
 
         public static Result WasSucces(Coach coach)
         {
@@ -18,7 +18,7 @@ namespace KataTrainReservation
 
         private sealed class Success : Result, IEquatable<Success>
         {
-            public override bool IfFound() => true;
+            public override bool Persisted() => true;
 
             public bool Equals(Success other)
             {
@@ -53,7 +53,7 @@ namespace KataTrainReservation
 
         private sealed class Fail : Result, IEquatable<Fail>
         {
-            public override bool IfFound() => false;
+            public override bool Persisted() => false;
 
             public bool Equals(Fail other)
             {

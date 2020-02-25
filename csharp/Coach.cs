@@ -27,7 +27,7 @@ namespace KataTrainReservation
 
         private List<Seat> GetRequiredNumberListSeat(int requiredNumberOfSeat) => FreeSeatsInCoach().GetRange(0, requiredNumberOfSeat);
 
-        public List<Seat> SelectSeat(int requiredNumberOfSeat)
+        public List<Seat> SelectFreeSeat(int requiredNumberOfSeat)
         {
             return HowManyPercentReserved(requiredNumberOfSeat) > _maxSeatReservation.MaxReservedSeat ? new List<Seat>() : GetRequiredNumberListSeat(requiredNumberOfSeat);
         }

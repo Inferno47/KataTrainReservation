@@ -45,7 +45,7 @@ namespace KataTrainReservation.TicketOfficeTest
         public void Reserve1SeatsInEmptyCoachReturnSuccessReservation()
         {
             Reservation expected = Reservation.Of("local_1000", "75bcd15", new List<Seat>() {Seat.Of("A", 1, "")});
-            Reservation result = _ticketOffice.MakeReservation(ReservationRequest.Of("local_1000", 1));
+            Reservation result = _ticketOffice.MakeReservationInCoach(ReservationRequest.Of("local_1000", 1));
 
             Assert.AreEqual(expected, result);
         }
@@ -54,7 +54,7 @@ namespace KataTrainReservation.TicketOfficeTest
         public void Reserve2SeatsInEmptyCoachReturnSuccessReservation()
         {
             Reservation expected = Reservation.Of("local_1000", "75bcd15", new List<Seat>() { Seat.Of("A", 1, ""), Seat.Of("A", 2, "") });
-            Reservation result = _ticketOffice.MakeReservation(ReservationRequest.Of("local_1000", 2));
+            Reservation result = _ticketOffice.MakeReservationInCoach(ReservationRequest.Of("local_1000", 2));
 
             Assert.AreEqual(expected, result);
         }
@@ -63,7 +63,7 @@ namespace KataTrainReservation.TicketOfficeTest
         public void Reserve1SeatsInPartiallyReservedCoachReturnSuccessReservation()
         {
             Reservation expected = Reservation.Of("express_2000", "75bcd15", new List<Seat>() { Seat.Of("A", 5, "") });
-            Reservation result = _ticketOffice.MakeReservation(ReservationRequest.Of("express_2000", 1));
+            Reservation result = _ticketOffice.MakeReservationInCoach(ReservationRequest.Of("express_2000", 1));
 
             Assert.AreEqual(expected, result);
         }
@@ -72,7 +72,7 @@ namespace KataTrainReservation.TicketOfficeTest
         public void Reserve1SeatsInFullyBookedCoachReturnFailReservation()
         {
             Reservation expected = Reservation.Of("test_3000", "", new List<Seat>() {});
-            Reservation result = _ticketOffice.MakeReservation(ReservationRequest.Of("test_3000", 1));
+            Reservation result = _ticketOffice.MakeReservationInCoach(ReservationRequest.Of("test_3000", 1));
 
             Assert.AreEqual(expected, result);
         }

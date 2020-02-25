@@ -20,9 +20,8 @@ namespace KataTrainReservation
 
         public Reservation MakeReservation(ReservationRequest request)
         {
-            if (request.TrainId == "local_1000")
-                return Reservation.Of("local_1000", "75bcd15", new List<Seat>() { Seat.Of("A", 1, "") });
-            return Reservation.Of("express_2000", "75bcd15", new List<Seat>() { Seat.Of("A", 5, "") });
+            var seatInTrain = _seat.GetInTrain(request.TrainId);
+            return Reservation.Of(request.TrainId, "75bcd15", seatInTrain.SelectFreeSeat(request.SeatCount));
         }
 
         public Reservation MakeReservationInCoach(ReservationRequest request)
@@ -34,7 +33,8 @@ namespace KataTrainReservation
             {
                 var reservation = Reservation.Of(request.TrainId, "75bcd15", selectedFreeSeat);
 
-                if (_reservationRegister.Reserve(reservation).Persisted())
+                var reserve = _reservationRegister.Reserve(reservation);
+                if (reserve.Persisted())
                     return reservation;
             }
 

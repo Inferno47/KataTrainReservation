@@ -51,5 +51,14 @@ namespace KataTrainReservation.TicketOfficeTest
 
             Assert.AreEqual(expected, result);
         }
+
+        [Test]
+        public void Reserve8SeatsInEmptyTrainReturnFailReservation()
+        {
+            Reservation expected = Reservation.Of("empty_train", "", new List<Seat>());
+            Reservation result = _ticketOffice.MakeReservation(ReservationRequest.Of("empty_train", 8));
+
+            Assert.AreEqual(expected, result);
+        }
     }
 }

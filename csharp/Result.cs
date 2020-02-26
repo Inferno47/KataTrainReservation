@@ -4,7 +4,7 @@ namespace KataTrainReservation
 {
     public abstract class Result
     {
-        public abstract bool Persisted();
+        public abstract bool IsSuccess();
 
         public static Result WasSucces(Coach coach)
         {
@@ -18,7 +18,7 @@ namespace KataTrainReservation
 
         private sealed class Success : Result, IEquatable<Success>
         {
-            public override bool Persisted() => true;
+            public override bool IsSuccess() => true;
 
             public bool Equals(Success other)
             {
@@ -47,13 +47,14 @@ namespace KataTrainReservation
                 return !Equals(left, right);
             }
 
-            public Coach Coach { get; }
+            private Coach Coach { get; }
+
             internal Success(Coach coach) => this.Coach = coach;
         }
 
         private sealed class Fail : Result, IEquatable<Fail>
         {
-            public override bool Persisted() => false;
+            public override bool IsSuccess() => false;
 
             public bool Equals(Fail other)
             {
@@ -82,7 +83,8 @@ namespace KataTrainReservation
                 return !Equals(left, right);
             }
 
-            public string ErrorMessage { get; }
+            private string ErrorMessage { get; }
+
             internal Fail(string errorMessage) => this.ErrorMessage = errorMessage;
         }
     }

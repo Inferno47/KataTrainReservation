@@ -29,6 +29,22 @@ namespace KataTrainReservation.TicketOfficeTest
                 Seat.Of("C" , 4, ""),
             }));
 
+            trainData.Setup(e => e.GetInTrain("1coachReserved_train")).Returns(Train.Of(new List<Seat>()
+            {
+                Seat.Of("A" , 1, "75bcd14"),
+                Seat.Of("A" , 2, "75bcd14"),
+                Seat.Of("A" , 3, ""),
+                Seat.Of("A" , 4, ""),
+                Seat.Of("B" , 1, ""),
+                Seat.Of("B" , 2, ""),
+                Seat.Of("B" , 3, ""),
+                Seat.Of("B" , 4, ""),
+                Seat.Of("C" , 1, ""),
+                Seat.Of("C" , 2, ""),
+                Seat.Of("C" , 3, ""),
+                Seat.Of("C" , 4, ""),
+            }));
+
             var reservationRegister = new Mock<IReservationRegister>();
             reservationRegister.Setup(e => e.Reserve(It.IsAny<Reservation>())).Returns(Result.WasSucces(null));
             _ticketOffice = new TicketOffice(trainData.Object, reservationRegister.Object);
@@ -44,10 +60,10 @@ namespace KataTrainReservation.TicketOfficeTest
         }
 
         [Test]
-        public void Reserve2SeatsInEmptyTrainReturnSuccessReservation()
+        public void Reserve2SeatsInTrainWith1CoachReservedReturnSuccessReservation()
         {
-            Reservation expected = Reservation.Of("empty_train", "75bcd15", new List<Seat>() { Seat.Of("A", 1, ""), Seat.Of("A", 2, "") });
-            Reservation result = _ticketOffice.MakeReservation(ReservationRequest.Of("empty_train", 2));
+            Reservation expected = Reservation.Of("1coachReserved_train", "75bcd15", new List<Seat>() { Seat.Of("B", 1, ""), Seat.Of("B", 2, "") });
+            Reservation result = _ticketOffice.MakeReservation(ReservationRequest.Of("1coachReserved_train", 2));
 
             Assert.AreEqual(expected, result);
         }

@@ -21,7 +21,10 @@ namespace KataTrainReservation
 
         public List<Seat> SelectFreeSeat(int requiredNumberOfSeat)
         {
-            return _coaches.First().SelectFreeSeat(requiredNumberOfSeat);
+            var selectedFreeSeat = _coaches.First().SelectFreeSeat(requiredNumberOfSeat);
+            if (selectedFreeSeat.Count != requiredNumberOfSeat && _coaches.Count >= 2)
+                selectedFreeSeat = _coaches[1].SelectFreeSeat(requiredNumberOfSeat);
+            return selectedFreeSeat;
         }
     }
 }

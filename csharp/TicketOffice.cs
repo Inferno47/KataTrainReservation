@@ -34,7 +34,7 @@ namespace KataTrainReservation
                 var reservation = Reservation.Of(request.TrainId, "75bcd15", selectedFreeSeat);
 
                 var reserve = _reservationRegister.Reserve(reservation);
-                if (reserve.Persisted())
+                if (reserve.IsSuccess())
                     return reservation;
             }
 

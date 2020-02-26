@@ -13,7 +13,7 @@ namespace KataTrainReservation.TicketOfficeTest
         public void Setup()
         {
             var trainData = new Mock<ISeat>();
-            trainData.Setup(e => e.GetInTrain("empty_train")).Returns(new Train(new List<Seat>()
+            trainData.Setup(e => e.GetInTrain("empty_train")).Returns(Train.Of(new List<Seat>()
             {
                 Seat.Of("A" , 1, ""),
                 Seat.Of("A" , 2, ""),
@@ -51,14 +51,6 @@ namespace KataTrainReservation.TicketOfficeTest
 
             Assert.AreEqual(expected, result);
         }
-
-        [Test]
-        public void Reserve8SeatsInEmptyTrainReturnFailReservation()
-        {
-            Reservation expected = Reservation.Of("empty_train", "", new List<Seat>());
-            Reservation result = _ticketOffice.MakeReservation(ReservationRequest.Of("empty_train", 8));
-
-            Assert.AreEqual(expected, result);
-        }
     }
 }
+

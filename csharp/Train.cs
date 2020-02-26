@@ -1,21 +1,27 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace KataTrainReservation
 {
     public class Train
     {
-        private List<Seat> list;
+        private readonly List<Coach> _coaches;
 
-        public Train(List<Seat> list)
+        public static Train Of(List<Seat> seats)
         {
-            this.list = list;
+            List<Coach> coaches = seats.GroupBy(e => e.Coach).Select(grouping => Coach.Of(grouping.ToList(), MaxSeatReservation.Of(70))).ToList();
+
+            return new Train(coaches);
+        }
+
+        private Train(List<Coach> coaches)
+        {
+            _coaches = coaches;
         }
 
         public List<Seat> SelectFreeSeat(int requiredNumberOfSeat)
         {
-            if (requiredNumberOfSeat == 1)
-                return new List<Seat>() {Seat.Of("A", 1, "")};
-            return new List<Seat>() {Seat.Of("A", 1, ""), Seat.Of("A", 2, "") };
+            return _coaches.First().SelectFreeSeat(requiredNumberOfSeat);
         }
     }
 }

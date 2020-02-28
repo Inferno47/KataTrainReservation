@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -19,7 +20,9 @@ namespace KataTrainReservation
             _maxSeatReservation = maxReservedSeat;
         }
 
-        private int HowManyReservedSeat() => _seats.Count(e => e.BookingReference != "");
+        public int TotalSeat() => _seats.Count;
+
+        public int HowManyReservedSeat() => _seats.Count(e => e.BookingReference != "");
 
         private int HowManyPercentReserved(int requiredNumberOfSeat) => (HowManyReservedSeat() + requiredNumberOfSeat) * 100 / _seats.Count;
 
@@ -27,9 +30,6 @@ namespace KataTrainReservation
 
         private List<Seat> GetRequiredNumberListSeat(int requiredNumberOfSeat) => FreeSeatsInCoach().GetRange(0, requiredNumberOfSeat);
 
-        public List<Seat> SelectFreeSeat(int requiredNumberOfSeat)
-        {
-            return HowManyPercentReserved(requiredNumberOfSeat) > _maxSeatReservation.MaxReservedSeat ? new List<Seat>() : GetRequiredNumberListSeat(requiredNumberOfSeat);
-        }
+        public List<Seat> SelectFreeSeat(Func<int, bool> f, int requiredNumberOfSeat) => !f(HowManyPercentReserved(requiredNumberOfSeat)) ? new List<Seat>() : GetRequiredNumberListSeat(requiredNumberOfSeat);
     }
 }

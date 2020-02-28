@@ -23,14 +23,23 @@ namespace KataTrainReservation
         {
             var selectedFreeSeat = new List<Seat>();
 
+            if (TotalReserved(requiredNumberOfSeat) >= 70)
+                return selectedFreeSeat;
+
             foreach (var coach in _coaches)
             {
-                selectedFreeSeat = coach.SelectFreeSeat(requiredNumberOfSeat);
+                selectedFreeSeat = coach.SelectFreeSeat(percentReserved => percentReserved < 70, requiredNumberOfSeat);
                 if (selectedFreeSeat.Count != 0)
                     break;
             }
 
             return selectedFreeSeat;
         }
+
+        private int TotalReserved(int requiredNumberOfSeat) => (TotalReservedSeat() + requiredNumberOfSeat) / TotalSeat();
+
+        private int TotalSeat() => _coaches.Sum(coach => coach.TotalSeat());
+
+        private int TotalReservedSeat() => _coaches.Sum(coach => coach.HowManyReservedSeat());
     }
 }

@@ -45,6 +45,22 @@ namespace KataTrainReservation.TicketOfficeTest
                 Seat.Of("C" , 4, ""),
             }));
 
+            trainData.Setup(e => e.GetInTrain("FullyReserved_train")).Returns(Train.Of(new List<Seat>()
+            {
+                Seat.Of("A" , 1, "75bcd14"),
+                Seat.Of("A" , 2, "75bcd14"),
+                Seat.Of("A" , 3, "75bcd14"),
+                Seat.Of("A" , 4, "75bcd14"),
+                Seat.Of("B" , 1, "75bcd14"),
+                Seat.Of("B" , 2, "75bcd14"),
+                Seat.Of("B" , 3, "75bcd14"),
+                Seat.Of("B" , 4, "75bcd14"),
+                Seat.Of("C" , 1, "75bcd14"),
+                Seat.Of("C" , 2, ""),
+                Seat.Of("C" , 3, ""),
+                Seat.Of("C" , 4, ""),
+            }));
+
             var reservationRegister = new Mock<IReservationRegister>();
             reservationRegister.Setup(e => e.Reserve(It.IsAny<Reservation>())).Returns(Result.WasSucces(null));
             _ticketOffice = new TicketOffice(trainData.Object, reservationRegister.Object);
@@ -60,10 +76,19 @@ namespace KataTrainReservation.TicketOfficeTest
         }
 
         [Test]
-        public void Reserve2SeatsInTrainWith1CoachReservedReturnSuccessReservation()
+        public void Reserve2SeatsInTrainReservedAtLessThan70PercentReturnSuccessReservation()
         {
             Reservation expected = Reservation.Of("1coachReserved_train", "75bcd15", new List<Seat>() { Seat.Of("B", 1, ""), Seat.Of("B", 2, "") });
             Reservation result = _ticketOffice.MakeReservation(ReservationRequest.Of("1coachReserved_train", 2));
+
+            Assert.AreEqual(expected, result);
+        }
+
+        [Test]
+        public void Reserve2SeatsInTrainReservedAtMoreThan70PercentReturnSuccessReservation()
+        {
+            Reservation expected = Reservation.Of("FullyReserved_train", "", new List<Seat>() {});
+            Reservation result = _ticketOffice.MakeReservation(ReservationRequest.Of("FullyReserved_train", 2));
 
             Assert.AreEqual(expected, result);
         }

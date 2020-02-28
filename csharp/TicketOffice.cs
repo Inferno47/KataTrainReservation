@@ -21,13 +21,14 @@ namespace KataTrainReservation
         public Reservation MakeReservation(ReservationRequest request)
         {
             var seatInTrain = _seat.GetInTrain(request.TrainId);
-            return Reservation.Of(request.TrainId, "75bcd15", seatInTrain.SelectFreeSeat(request.SeatCount));
+            var selectFreeSeat = seatInTrain.SelectFreeSeat(request.SeatCount);
+            return Reservation.Of(request.TrainId, selectFreeSeat.Count != 0 ? "75bcd15" : "", selectFreeSeat);
         }
 
         public Reservation MakeReservationInCoach(ReservationRequest request)
         {
             var seatInCoach = _seat.GetInCoach(request.TrainId, "A");
-            var selectedFreeSeat = seatInCoach.SelectFreeSeat(request.SeatCount);
+            var selectedFreeSeat = seatInCoach.SelectFreeSeat(percentReserved => percentReserved < 70, request.SeatCount);
 
             if (HasSeatSelected(selectedFreeSeat))
             {

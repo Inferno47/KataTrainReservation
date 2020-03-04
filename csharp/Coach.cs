@@ -6,18 +6,16 @@ namespace KataTrainReservation
 {
     public class Coach
     {
-        public static Coach Of(List<Seat> seats, MaxSeatReservation maxReservedSeat)
+        public static Coach Of(List<Seat> seats)
         {
-            return new Coach(seats, maxReservedSeat);
+            return new Coach(seats);
         }
 
         private readonly List<Seat> _seats;
-        private readonly MaxSeatReservation _maxSeatReservation;
 
-        private Coach(List<Seat> seats, MaxSeatReservation maxReservedSeat)
+        private Coach(List<Seat> seats)
         {
             _seats = seats;
-            _maxSeatReservation = maxReservedSeat;
         }
 
         public int TotalSeat() => _seats.Count;

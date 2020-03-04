@@ -2,7 +2,7 @@ namespace KataTrainReservation
 {
     public interface ISeat
     {
-        Coach GetInCoach(string train, string coach);
-        Train GetInTrain(string train);
+        Coach GetCoach(string train, string coach);
+        Train GetTrain(string train);
     }
 }

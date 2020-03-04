@@ -13,7 +13,7 @@ namespace KataTrainReservation.TicketOfficeTest
         public void Setup()
         {
             var trainData = new Mock<ISeat>();
-            trainData.Setup(e => e.GetInCoach("express_2000", "A")).Returns(Coach.Of(new List<Seat>() {
+            trainData.Setup(e => e.GetCoach("express_2000", "A")).Returns(Coach.Of(new List<Seat>() {
                 Seat.Of("A" , 1, "75bcd14"),
                 Seat.Of("A" , 2, "75bcd14"),
                 Seat.Of("A" , 3, "75bcd14"),
@@ -22,23 +22,27 @@ namespace KataTrainReservation.TicketOfficeTest
                 Seat.Of("A" , 6, ""),
                 Seat.Of("A" , 7, ""),
                 Seat.Of("A" , 8, "")
-            }, MaxSeatReservation.Of(70)));
-            trainData.Setup(e => e.GetInCoach("local_1000", "A")).Returns(Coach.Of(new List<Seat>() {
+            }));
+            trainData.Setup(e => e.GetCoach("local_1000", "A")).Returns(Coach.Of(new List<Seat>() {
                 Seat.Of("A" , 1, ""),
                 Seat.Of("A" , 2, ""),
                 Seat.Of("A" , 3, ""),
                 Seat.Of("A" , 4, "")
-            }, MaxSeatReservation.Of(70)));
-            trainData.Setup(e => e.GetInCoach("test_3000", "A")).Returns(Coach.Of(new List<Seat>() {
+            }));
+            trainData.Setup(e => e.GetCoach("test_3000", "A")).Returns(Coach.Of(new List<Seat>() {
                 Seat.Of("A" , 1, "75bcd14"),
                 Seat.Of("A" , 2, "75bcd14"),
                 Seat.Of("A" , 3, "75bcd14"),
                 Seat.Of("A" , 4, "75bcd14")
-            }, MaxSeatReservation.Of(70)));
+            }));
 
             var reservationRegister = new Mock<IReservationRegister>();
             reservationRegister.Setup(e => e.Reserve(It.IsAny<Reservation>())).Returns(Result.WasSucces(null));
-            _ticketOffice = new TicketOffice(trainData.Object, reservationRegister.Object);
+
+            var bookingReference = new Mock<IBookingReference>();
+            bookingReference.Setup(e => e.GetBookingReference()).Returns("75bcd15");
+
+            _ticketOffice = new TicketOffice(trainData.Object, reservationRegister.Object, bookingReference.Object);
         }
 
         [Test]

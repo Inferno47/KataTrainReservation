@@ -11,28 +11,30 @@ namespace KataTrainReservation
     {
         private readonly ISeat _seat;
         private readonly IReservationRegister _reservationRegister;
+        private readonly IBookingReference _booking;
 
-        public TicketOffice(ISeat seat, IReservationRegister reservationRegister)
+        public TicketOffice(ISeat seat, IReservationRegister reservationRegister, IBookingReference booking)
         {
             _seat = seat;
             _reservationRegister = reservationRegister;
+            _booking = booking;
         }
 
         public Reservation MakeReservation(ReservationRequest request)
         {
-            var seatInTrain = _seat.GetInTrain(request.TrainId);
-            var selectFreeSeat = seatInTrain.SelectFreeSeat(request.SeatCount);
-            return Reservation.Of(request.TrainId, selectFreeSeat.Count != 0 ? "75bcd15" : "", selectFreeSeat);
+            var train = _seat.GetTrain(request.TrainId);
+            var selectedFreeSeat = train.SelectFreeSeat(request.SeatCount);
+            return Reservation.Of(request.TrainId, selectedFreeSeat.Count != 0 ? _booking.GetBookingReference() : "", selectedFreeSeat);
         }
 
         public Reservation MakeReservationInCoach(ReservationRequest request)
         {
-            var seatInCoach = _seat.GetInCoach(request.TrainId, "A");
+            var seatInCoach = _seat.GetCoach(request.TrainId, "A");
             var selectedFreeSeat = seatInCoach.SelectFreeSeat(percentReserved => percentReserved < 70, request.SeatCount);
 
             if (HasSeatSelected(selectedFreeSeat))
             {
-                var reservation = Reservation.Of(request.TrainId, "75bcd15", selectedFreeSeat);
+                var reservation = Reservation.Of(request.TrainId, _booking.GetBookingReference(), selectedFreeSeat);
 
                 var reserve = _reservationRegister.Reserve(reservation);
                 if (reserve.IsSuccess())

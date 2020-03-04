@@ -87,6 +87,7 @@
     <Content Include="train_data_service\train_data_service_flask.py" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="csharp\IBookingReference.cs" />
     <Compile Include="csharp\IReservationRegister.cs" />
     <Compile Include="csharp\MaxSeatReservation.cs" />
     <Compile Include="csharp\Reservation.cs" />

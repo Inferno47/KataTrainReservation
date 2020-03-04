@@ -9,7 +9,7 @@ namespace KataTrainReservation
 
         public static Train Of(List<Seat> seats)
         {
-            List<Coach> coaches = seats.GroupBy(e => e.Coach).Select(grouping => Coach.Of(grouping.ToList(), MaxSeatReservation.Of(70))).ToList();
+            List<Coach> coaches = seats.GroupBy(e => e.Coach).Select(grouping => Coach.Of(grouping.ToList())).ToList();
 
             return new Train(coaches);
         }
@@ -23,23 +23,16 @@ namespace KataTrainReservation
         {
             var selectedFreeSeat = new List<Seat>();
 
-            if (TotalReserved(requiredNumberOfSeat) >= 70)
+            var ReservedSeatsInTrain = _coaches.Sum(coach => coach.HowManyReservedSeat());
+            var TotalSeatsInTrain = _coaches.Sum(coach => coach.TotalSeat());
+            if ((ReservedSeatsInTrain + requiredNumberOfSeat) * 100 / TotalSeatsInTrain >= 70)
                 return selectedFreeSeat;
 
-            foreach (var coach in _coaches)
-            {
-                selectedFreeSeat = coach.SelectFreeSeat(percentReserved => percentReserved < 70, requiredNumberOfSeat);
-                if (selectedFreeSeat.Count != 0)
-                    break;
-            }
+            selectedFreeSeat = _coaches
+                .Select(x => x.SelectFreeSeat(percentReserved => percentReserved < 70, requiredNumberOfSeat))
+                .FirstOrDefault(x=> x.Count !=0 );
 
-            return selectedFreeSeat;
+            return selectedFreeSeat ?? new List<Seat>();
         }
-
-        private int TotalReserved(int requiredNumberOfSeat) => (TotalReservedSeat() + requiredNumberOfSeat) / TotalSeat();
-
-        private int TotalSeat() => _coaches.Sum(coach => coach.TotalSeat());
-
-        private int TotalReservedSeat() => _coaches.Sum(coach => coach.HowManyReservedSeat());
     }
 }

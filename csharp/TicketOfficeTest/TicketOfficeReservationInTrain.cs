@@ -96,6 +96,15 @@ namespace KataTrainReservation.TicketOfficeTest
 
             Assert.AreEqual(expected, result);
         }
+
+        [Test]
+        public void Reserve1SeatsInTrainReservedAtLessThan70PercentReturnReservationInOneCoachReservedAtMore70Percent()
+        {
+            Reservation expected = Reservation.Of("1coachReserved_train", "75bcd15", new List<Seat>() { Seat.Of("A", 4, "") });
+            Reservation result = _ticketOffice.MakeReservation(ReservationRequest.Of("1coachReserved_train", 1));
+
+            Assert.AreEqual(expected, result);
+        }
     }
 }
 

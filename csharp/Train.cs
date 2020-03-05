@@ -29,7 +29,7 @@ namespace KataTrainReservation
                 return selectedFreeSeat;
 
             selectedFreeSeat = _coaches
-                .Select(x => x.SelectFreeSeat(percentReserved => percentReserved < 70, requiredNumberOfSeat))
+                .Select(x => x.SelectFreeSeat(percentReserved => percentReserved <= 100, requiredNumberOfSeat))
                 .FirstOrDefault(x=> x.Count !=0 );
 
             return selectedFreeSeat ?? new List<Seat>();
